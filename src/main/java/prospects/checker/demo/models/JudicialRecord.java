@@ -15,4 +15,12 @@ import java.util.Date;
 public class JudicialRecord implements Serializable {
     private String pin;
     private boolean hasJudicialRecords;
+
+    @Override
+    public String toString() {
+        return "JudicialRecord{" +
+                "pin='" + pin + '\'' +
+                ", hasJudicialRecords=" + hasJudicialRecords +
+                '}';
+    }
 }

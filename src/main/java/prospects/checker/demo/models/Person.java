@@ -20,4 +20,17 @@ public class Person implements Serializable {
     private String location;
     private String gender;
     private String jobTitle;
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "pin='" + pin + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", location='" + location + '\'' +
+                ", gender='" + gender + '\'' +
+                ", jobTitle='" + jobTitle + '\'' +
+                '}';
+    }
 }
