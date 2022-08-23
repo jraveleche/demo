@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import prospects.checker.demo.validators.QualificationValidator;
 
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -19,7 +20,15 @@ public class ProspectController {
     @Async
     public void initValidation() {
         try {
-            validator.validate("2532903920502");
+            CompletableFuture<Integer> completableFuture =  validator.validate("2532903920502");
+            completableFuture.thenAccept(r -> {
+               LOG.info("SCORE RESULT ---------> {}", r);
+               if(r > 60) {
+                   LOG.info("Is a prospect");
+               }else {
+                   LOG.info("Is not a prospect");
+               }
+            });
         } catch (ExecutionException | InterruptedException e) {
             throw new RuntimeException(e);
         }

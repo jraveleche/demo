@@ -28,6 +28,7 @@ public class DataRepository {
             } catch (ParseException e) {
                 LOG.error("CASTA DATE ERROR ", e);
             }
+            return person;
         }
         return null;
     }

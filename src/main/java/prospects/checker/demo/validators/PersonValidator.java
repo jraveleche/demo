@@ -1,5 +1,7 @@
 package prospects.checker.demo.validators;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -13,6 +15,7 @@ import prospects.checker.demo.validators.interfaces.Validator;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 import java.util.concurrent.CompletableFuture;
 
 @Component
@@ -45,6 +48,7 @@ public class PersonValidator implements Validator<CompletableFuture<Boolean>> {
         }
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         String date1 = dateFormat.format(person1.getDateOfBirth());
         String date2 = dateFormat.format(person2.getDateOfBirth());
 

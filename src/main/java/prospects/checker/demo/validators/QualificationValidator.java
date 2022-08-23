@@ -52,7 +52,15 @@ public class QualificationValidator implements Validator<CompletableFuture<Integ
             String scoreString = String.valueOf(scoreObject);
             score = Integer.parseInt("null".equals(scoreString) ? "0" : scoreString);
         }
+
         score = score / 10;
+        if(judicialResult) {
+            score = score - 10;
+        }
+
+        if(!personalResult) {
+            score = score - 10;
+        }
         return CompletableFuture.completedFuture(score);
     }
 }
