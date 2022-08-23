@@ -2,9 +2,11 @@ package prospects.checker.demo.validators;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import prospects.checker.demo.controllers.HttpController;
+import prospects.checker.demo.models.Response;
 import prospects.checker.demo.validators.interfaces.Validator;
 
 import java.util.HashMap;
@@ -22,7 +24,7 @@ public class QualificationValidator implements Validator<CompletableFuture<Integ
     private PersonValidator personValidator;
 
     @Autowired
-    private HttpController<Map<String, Object>> httpController;
+    private HttpController httpController;
 
     @Value("${internal.host}")
     private String  host;
@@ -42,13 +44,15 @@ public class QualificationValidator implements Validator<CompletableFuture<Integ
                 pin;
         bodyRequest.put("personValidation", personalResult);
         bodyRequest.put("judicialvalidation", judicialResult);
-        Map<String, Object> result = httpController.doPost(url, bodyRequest);
-        Integer score = 0;
+        ParameterizedTypeReference<Response<Map<String, Object>>> typeReference = new ParameterizedTypeReference<>(){};
+        Map<String, Object> result = httpController.doPost(url, bodyRequest, typeReference);
+        int score = 0;
         if(result.containsKey("score")) {
             Object scoreObject = result.get("score");
             String scoreString = String.valueOf(scoreObject);
-            score = Integer.valueOf("null".equals(scoreString) ? "0" : scoreString);
+            score = Integer.parseInt("null".equals(scoreString) ? "0" : scoreString);
         }
+        score = score / 10;
         return CompletableFuture.completedFuture(score);
     }
 }

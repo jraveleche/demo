@@ -2,10 +2,12 @@ package prospects.checker.demo.validators;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import prospects.checker.demo.controllers.HttpController;
 import prospects.checker.demo.models.Person;
+import prospects.checker.demo.models.Response;
 import prospects.checker.demo.repository.DataRepository;
 import prospects.checker.demo.validators.interfaces.Validator;
 
@@ -20,18 +22,19 @@ public class PersonValidator implements Validator<CompletableFuture<Boolean>> {
     private DataRepository dataRepository;
 
     @Autowired
-    private HttpController<Person> httpController;
+    private HttpController httpController;
 
     @Value("${external.host}")
     private String  host;
 
     @Override
     @Async
-    public CompletableFuture<Boolean> validate(String pin) throws InterruptedException{
+    public CompletableFuture<Boolean> validate(String pin) {
         String url = host +
                 "national-registry-identification/person/" +
                 pin;
-        Person person = httpController.doGet(url);
+        ParameterizedTypeReference<Response<Person>> typeReference = new ParameterizedTypeReference<>() {};
+        Person person = httpController.doGet(url, typeReference);
         Person personDataBase = dataRepository.findById(pin);
         return CompletableFuture.completedFuture(comparePersonData(person, personDataBase));
     }

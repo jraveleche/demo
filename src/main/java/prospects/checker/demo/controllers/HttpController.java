@@ -11,18 +11,17 @@ import org.springframework.web.client.RestTemplate;
 import prospects.checker.demo.models.Response;
 
 @Component
-public class HttpController<T> {
+public class HttpController {
 
     @Autowired
     private RestTemplate restTemplate;
 
-    public T doGet(String url) {
+    public <T> T doGet(String url, ParameterizedTypeReference<Response<T>> typeReference) {
         ResponseEntity<Response<T>> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<>() {
-                });
+                typeReference);
         Response<T> body = response.getBody();
         if(body != null) {
             return body.getData();
@@ -30,13 +29,12 @@ public class HttpController<T> {
         return null;
     }
 
-    public T doPost(String url, Object bodyRequest){
+    public <T> T doPost(String url, Object bodyRequest, ParameterizedTypeReference<Response<T>> typeReference){
         ResponseEntity<Response<T>> response = restTemplate.exchange(
                 url,
                 HttpMethod.POST,
                 new HttpEntity<>(bodyRequest),
-                new ParameterizedTypeReference<>() {
-                });
+                typeReference);
         Response<T> body = response.getBody();
         if(body != null) {
             return body.getData();
