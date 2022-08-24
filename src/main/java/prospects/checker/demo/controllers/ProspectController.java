@@ -30,24 +30,20 @@ public class ProspectController {
 
     @Async
     public void initValidation(String pin) {
-        try {
-            CompletableFuture<Integer> completableFuture =  validator.validate(pin);
-            completableFuture.thenAccept(r -> {
-               LOG.info("SCORE RESULT ---------> {}", r);
-               if(r > 60) {
-                   String url = host +
-                           "sales/pipeline/" +
-                           pin;
-                   LOG.info("Is a prospect");
-                   Map<String, Object> request = new HashMap<>();
-                   request.put("score", r);
-                   request.put("convertToProspect", true);
-                   ParameterizedTypeReference<Response<Map<String, Object>>> typeReference = new ParameterizedTypeReference<>() {};
-                   httpController.doPost(url, request, typeReference);
-               }
-            });
-        } catch (ExecutionException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        CompletableFuture<Integer> completableFuture =  validator.validate(pin);
+        completableFuture.thenAccept(r -> {
+            LOG.info("SCORE RESULT ---------> {}", r);
+            if(r > 60) {
+                String url = host +
+                        "sales/pipeline/" +
+                        pin;
+                LOG.info("Is a prospect");
+                Map<String, Object> request = new HashMap<>();
+                request.put("score", r);
+                request.put("convertToProspect", true);
+                ParameterizedTypeReference<Response<Map<String, Object>>> typeReference = new ParameterizedTypeReference<>() {};
+                httpController.doPost(url, request, typeReference);
+            }
+        });
     }
 }
