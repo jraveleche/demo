@@ -28,7 +28,7 @@ public class DemoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 		LOG.info("Init process validation");
-		prospectController.initValidation();
+		prospectController.initValidation("2532903920502");
 		LOG.info("Finish validation proccess");
 	}
 }
