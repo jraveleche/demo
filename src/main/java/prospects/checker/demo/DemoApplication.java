@@ -3,6 +3,7 @@ package prospects.checker.demo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +19,9 @@ public class DemoApplication implements CommandLineRunner {
 	@Autowired
 	private ProspectController prospectController;
 
+	@Value("${person.pin}")
+	private String pin;
+
 	public static void main(String[] args) {
 		LOG.info("STATING APPLICATION");
 		SpringApplication.run(DemoApplication.class, args);
@@ -26,7 +30,9 @@ public class DemoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 		LOG.info("Init process validation");
-		prospectController.initValidation("2532903920502");
+		if(pin != null && pin.isBlank()) {
+			prospectController.initValidation(pin);
+		}
 		LOG.info("Finish validation proccess");
 	}
 }
