@@ -7,7 +7,6 @@ import prospects.checker.demo.models.Person;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 @Component
 public class DataRepository {

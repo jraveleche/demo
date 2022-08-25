@@ -6,16 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 import prospects.checker.demo.models.Response;
 import prospects.checker.demo.validators.QualificationValidator;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
-@Service
+@Component
 public class ProspectController {
     private static final Logger LOG = LoggerFactory.getLogger(ProspectController.class);
 
