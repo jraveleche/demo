@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.SpringApplication;
+import org.springframework.context.ApplicationContext;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,9 @@ public class ProspectComponent {
     @Autowired
     private HttpComponent httpComponent;
 
+    @Autowired
+    private ApplicationContext applicationContext;
+
     @Value("${internal.host}")
     private String  host;
 
@@ -32,6 +37,13 @@ public class ProspectComponent {
         CompletableFuture<Integer> completableFuture =  validator.validate(pin);
         completableFuture.thenAccept(r -> {
             LOG.info("SCORE RESULT ---------> {}", r);
+
+            if( r == -1) {
+                LOG.error("Error in the prospect validation process");
+                initAppShutdown(-1);
+                return;
+            }
+
             if(r > 60) {
                 String url = host +
                         "sales/pipeline/" +
@@ -42,7 +54,15 @@ public class ProspectComponent {
                 request.put("convertToProspect", true);
                 ParameterizedTypeReference<Response<Map<String, Object>>> typeReference = new ParameterizedTypeReference<>() {};
                 httpComponent.doPost(url, request, typeReference);
+            }else {
+                LOG.info("Is not a prospect, sorry :(");
             }
+            initAppShutdown(0);
         });
+    }
+
+    private void initAppShutdown(int returnCode) {
+        int exitCode = SpringApplication.exit(applicationContext , () -> returnCode);
+        System.exit(exitCode);
     }
 }

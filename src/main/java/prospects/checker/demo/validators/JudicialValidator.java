@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import prospects.checker.demo.components.HttpComponent;
 import prospects.checker.demo.models.JudicialRecord;
 import prospects.checker.demo.models.Response;
@@ -23,7 +24,7 @@ public class JudicialValidator implements Validator<CompletableFuture<Boolean>> 
 
     @Override
     @Async
-    public CompletableFuture<Boolean> validate(String pin) {
+    public CompletableFuture<Boolean> validate(String pin) throws RestClientException {
         String url = host +
                 "judicial-records/person/" +
                 pin;

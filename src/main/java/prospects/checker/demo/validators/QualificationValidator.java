@@ -1,5 +1,7 @@
 package prospects.checker.demo.validators;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
@@ -12,10 +14,13 @@ import prospects.checker.demo.validators.interfaces.Validator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 import java.util.concurrent.ExecutionException;
 
 @Component
 public class QualificationValidator implements Validator<CompletableFuture<Integer>> {
+
+    private final Logger LOG = LoggerFactory.getLogger(QualificationValidator.class);
 
     @Autowired
     private JudicialValidator judicialValidator;
@@ -63,8 +68,9 @@ public class QualificationValidator implements Validator<CompletableFuture<Integ
                 score = score - 10;
             }
             return CompletableFuture.completedFuture(score);
-        } catch (InterruptedException | ExecutionException e) {
-            throw new RuntimeException(e);
+        } catch (InterruptedException | ExecutionException | CompletionException e) {
+            LOG.error("Validation procces could not completed", e);
+            return CompletableFuture.completedFuture(-1);
         }
     }
 }
