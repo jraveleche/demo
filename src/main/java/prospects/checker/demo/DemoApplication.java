@@ -29,8 +29,8 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) {
-		LOG.info("Init process validation");
-		if(pin != null && pin.isBlank()) {
+		LOG.info("Init process validation {}", pin);
+		if(pin != null && !pin.isBlank()) {
 			prospectController.initValidation(pin);
 		}
 		LOG.info("Finish validation proccess");
