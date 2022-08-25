@@ -8,7 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import prospects.checker.demo.components.HttpComponent;
 import prospects.checker.demo.models.Response;
 import prospects.checker.demo.validators.QualificationValidator;
@@ -17,7 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
-@Component
+@Service
 public class ProspectService {
     private static final Logger LOG = LoggerFactory.getLogger(ProspectService.class);
 
