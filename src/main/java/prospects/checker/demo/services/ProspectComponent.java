@@ -1,4 +1,4 @@
-package prospects.checker.demo.components;
+package prospects.checker.demo.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,6 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
+import prospects.checker.demo.components.HttpComponent;
 import prospects.checker.demo.models.Response;
 import prospects.checker.demo.validators.QualificationValidator;
 
