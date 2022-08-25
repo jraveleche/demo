@@ -10,6 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
 import prospects.checker.demo.components.ProspectComponent;
 
+import java.util.List;
+
 @SpringBootApplication
 @EnableAsync(proxyTargetClass = true)
 public class DemoApplication implements CommandLineRunner {
@@ -22,6 +24,9 @@ public class DemoApplication implements CommandLineRunner {
 	@Value("${person.pin}")
 	private String pin;
 
+	@Value("${test.run}")
+	private String runTest;
+
 	public static void main(String[] args) {
 		LOG.info("STATING APPLICATION");
 		SpringApplication.run(DemoApplication.class, args);
@@ -30,8 +35,15 @@ public class DemoApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 		LOG.info("Init process validation {}", pin);
-		if(pin != null && !pin.isBlank()) {
+		String checkRunTest = String.valueOf(runTest);
+		if(pin != null && !pin.isBlank() && "null".equals(checkRunTest)) {
 			prospectComponent.initValidation(pin);
+		}else if ("true".equals(checkRunTest)) {
+			LOG.info("Running test scenarios ...");
+			List<String> values = List.of("error", "001", "2532903920502");
+			for(String value : values) {
+				prospectComponent.initValidation(value);
+			}
 		}
 		LOG.info("Finish validation proccess");
 	}

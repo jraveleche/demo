@@ -32,6 +32,9 @@ public class ProspectComponent {
     @Value("${internal.host}")
     private String  host;
 
+    @Value("${test.run}")
+    private String runTest;
+
     @Async
     public void initValidation(String pin) {
         CompletableFuture<Integer> completableFuture =  validator.validate(pin);
@@ -62,7 +65,11 @@ public class ProspectComponent {
     }
 
     private void initAppShutdown(int returnCode) {
-        int exitCode = SpringApplication.exit(applicationContext , () -> returnCode);
-        System.exit(exitCode);
+        String checkRunTest = String.valueOf(runTest);
+        LOG.info("EXIT APPLICATION WITH CODE {}", returnCode);
+        if("null".equals(checkRunTest)){
+            int exitCode = SpringApplication.exit(applicationContext , () -> returnCode);
+            System.exit(exitCode);
+        }
     }
 }
