@@ -15,14 +15,14 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Component
-public class ProspectController {
-    private static final Logger LOG = LoggerFactory.getLogger(ProspectController.class);
+public class ProspectComponent {
+    private static final Logger LOG = LoggerFactory.getLogger(ProspectComponent.class);
 
     @Autowired
     private QualificationValidator validator;
 
     @Autowired
-    private HttpController httpController;
+    private HttpComponent httpComponent;
 
     @Value("${internal.host}")
     private String  host;
@@ -41,7 +41,7 @@ public class ProspectController {
                 request.put("score", r);
                 request.put("convertToProspect", true);
                 ParameterizedTypeReference<Response<Map<String, Object>>> typeReference = new ParameterizedTypeReference<>() {};
-                httpController.doPost(url, request, typeReference);
+                httpComponent.doPost(url, request, typeReference);
             }
         });
     }

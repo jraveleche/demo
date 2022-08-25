@@ -13,9 +13,9 @@ import org.springframework.web.client.RestTemplate;
 import prospects.checker.demo.models.Response;
 
 @Component
-public class HttpController {
+public class HttpComponent {
 
-    private final Logger LOG = LoggerFactory.getLogger(HttpController.class);
+    private final Logger LOG = LoggerFactory.getLogger(HttpComponent.class);
 
     @Autowired
     private RestTemplate restTemplate;

@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import prospects.checker.demo.controllers.HttpController;
+import prospects.checker.demo.controllers.HttpComponent;
 import prospects.checker.demo.models.Person;
 import prospects.checker.demo.models.Response;
 import prospects.checker.demo.repository.DataRepository;
@@ -23,7 +23,7 @@ public class PersonValidator implements Validator<CompletableFuture<Boolean>> {
     private DataRepository dataRepository;
 
     @Autowired
-    private HttpController httpController;
+    private HttpComponent httpComponent;
 
     @Value("${external.host}")
     private String  host;
@@ -35,7 +35,7 @@ public class PersonValidator implements Validator<CompletableFuture<Boolean>> {
                 "national-registry-identification/person/" +
                 pin;
         ParameterizedTypeReference<Response<Person>> typeReference = new ParameterizedTypeReference<>() {};
-        Person person = httpController.doGet(url, typeReference);
+        Person person = httpComponent.doGet(url, typeReference);
         Person personDataBase = dataRepository.findById(pin);
         return CompletableFuture.completedFuture(comparePersonData(person, personDataBase));
     }

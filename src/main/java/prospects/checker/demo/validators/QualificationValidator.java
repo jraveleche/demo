@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import prospects.checker.demo.controllers.HttpController;
+import prospects.checker.demo.controllers.HttpComponent;
 import prospects.checker.demo.models.Response;
 import prospects.checker.demo.validators.interfaces.Validator;
 
@@ -24,7 +24,7 @@ public class QualificationValidator implements Validator<CompletableFuture<Integ
     private PersonValidator personValidator;
 
     @Autowired
-    private HttpController httpController;
+    private HttpComponent httpComponent;
 
     @Value("${internal.host}")
     private String  host;
@@ -46,7 +46,7 @@ public class QualificationValidator implements Validator<CompletableFuture<Integ
             bodyRequest.put("personValidation", personalResult);
             bodyRequest.put("judicialvalidation", judicialResult);
             ParameterizedTypeReference<Response<Map<String, Object>>> typeReference = new ParameterizedTypeReference<>(){};
-            Map<String, Object> result = httpController.doPost(url, bodyRequest, typeReference);
+            Map<String, Object> result = httpComponent.doPost(url, bodyRequest, typeReference);
             int score = 0;
             if(result.containsKey("score")) {
                 Object scoreObject = result.get("score");
