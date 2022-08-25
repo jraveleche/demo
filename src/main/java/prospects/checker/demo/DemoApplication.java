@@ -8,7 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
-import prospects.checker.demo.controllers.ProspectComponent;
+import prospects.checker.demo.components.ProspectComponent;
 
 @SpringBootApplication
 @EnableAsync(proxyTargetClass = true)

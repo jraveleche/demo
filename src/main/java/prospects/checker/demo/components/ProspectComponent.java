@@ -1,4 +1,4 @@
-package prospects.checker.demo.controllers;
+package prospects.checker.demo.components;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

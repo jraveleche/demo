@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import prospects.checker.demo.controllers.HttpComponent;
+import prospects.checker.demo.components.HttpComponent;
 import prospects.checker.demo.models.Response;
 import prospects.checker.demo.validators.interfaces.Validator;
 
