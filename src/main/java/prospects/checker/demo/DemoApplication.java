@@ -8,7 +8,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
-import prospects.checker.demo.services.ProspectComponent;
+import prospects.checker.demo.services.ProspectService;
 
 import java.util.List;
 
@@ -19,7 +19,7 @@ public class DemoApplication implements CommandLineRunner {
 	private static final Logger LOG = LoggerFactory.getLogger(DemoApplication.class);
 
 	@Autowired
-	private ProspectComponent prospectComponent;
+	private ProspectService prospectService;
 
 	@Value("${person.pin}")
 	private String pin;
@@ -37,12 +37,12 @@ public class DemoApplication implements CommandLineRunner {
 		LOG.info("Init process validation {}", pin);
 		String checkRunTest = String.valueOf(runTest);
 		if(pin != null && !pin.isBlank() && "null".equals(checkRunTest)) {
-			prospectComponent.initValidation(pin);
+			prospectService.initValidation(pin);
 		}else if ("true".equals(checkRunTest)) {
 			LOG.info("Running test scenarios ...");
 			List<String> values = List.of("error", "001", "2532903920502");
 			for(String value : values) {
-				prospectComponent.initValidation(value);
+				prospectService.initValidation(value);
 			}
 		}
 		LOG.info("Finish validation proccess");

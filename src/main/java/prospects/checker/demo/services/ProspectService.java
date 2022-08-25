@@ -18,8 +18,8 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 @Component
-public class ProspectComponent {
-    private static final Logger LOG = LoggerFactory.getLogger(ProspectComponent.class);
+public class ProspectService {
+    private static final Logger LOG = LoggerFactory.getLogger(ProspectService.class);
 
     @Autowired
     private QualificationValidator validator;
