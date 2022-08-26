@@ -61,11 +61,11 @@ public class QualificationValidator implements Validator<CompletableFuture<Integ
 
             score = score / 10;
             if(judicialResult) {
-                score = score - 10;
+                return CompletableFuture.completedFuture(0);
             }
 
             if(!personalResult) {
-                score = score - 10;
+                return CompletableFuture.completedFuture(0);
             }
             return CompletableFuture.completedFuture(score);
         } catch (InterruptedException | ExecutionException | CompletionException e) {
