@@ -36,7 +36,7 @@ public class DemoApplication implements CommandLineRunner {
 	public void run(String... args) {
 		LOG.info("Init process validation {}", pin);
 		String checkRunTest = String.valueOf(runTest);
-		if(pin != null && !pin.isBlank() && "null".equals(checkRunTest)) {
+		if(pin != null && !pin.isBlank() && !"true".equals(checkRunTest)) {
 			prospectService.initValidation(pin);
 		}else if ("true".equals(checkRunTest)) {
 			LOG.info("Running test scenarios ...");

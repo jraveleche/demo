@@ -68,7 +68,7 @@ public class ProspectService {
     private void initAppShutdown(int returnCode) {
         String checkRunTest = String.valueOf(runTest);
         LOG.info("EXIT APPLICATION WITH CODE {}", returnCode);
-        if("null".equals(checkRunTest)){
+        if(!"true".equals(checkRunTest)){
             int exitCode = SpringApplication.exit(applicationContext , () -> returnCode);
             System.exit(exitCode);
         }
