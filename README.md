@@ -1,4 +1,4 @@
-# Code Challenge 
+# Code Challenge
 # Decisions
 1. The project has built using Java 11 and Spring Boot
 2. Postman has been used for mock HTTP requests.
@@ -35,3 +35,5 @@ To run test cases for the project, please run:
 ```console
 gradle bootRun -Pargs=--person.pin=test,--test.run=true 
 ```
+# Additional information
+1. Diagrams on demo/diagrams folder.
